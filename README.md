@@ -31,7 +31,7 @@ public function create_example_posttype()
 	$labels = array(
 		'name'					=> __( 'Examples' ),
 		'singular_name'			=> __( 'Example' ),
-		'add_new' 				=> __( 'Add New Example' ),
+		'add_new'				=> __( 'Add New Example' ),
 		'add_new_item'			=> __( 'Add New Example' ),
 		'edit_item'				=> __( 'Edit Example' ),
 		'new_item'				=> __( 'Add New Example' ),
@@ -47,12 +47,12 @@ public function create_example_posttype()
 	);
 	
 	$args = array(
-		'labels' 		=> $labels,
+		'labels'		=> $labels,
 		'public'		=> true,
 		'has_archive'	=> true,
-		'rewrite' 		=> array('slug' => 'example'),
+		'rewrite'		=> array('slug' => 'example'),
 		'show_in_rest'	=> true,
-		'supports' 		=> $supports,
+		'supports'		=> $supports,
 		
 		// below if you want to have a meta box
 		'register_meta_box_cb' 	=> array( $this, 'add_example_metaboxes' ),  
