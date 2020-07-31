@@ -218,7 +218,7 @@ class PluginName
 The way I think of Nonce is like CSRF token. In the `Utils` folder, you can see there is `Request.php` class file. You can call `Request::get_nonce()` to get the nonce token. Always pass your nonce token to key parameter nonce. See the examples below
 
 ### Jquery
-```php
+```html
 <input type='hidden' id='some_nonce' name='nonce' value="<?= Request::get_nonce(); ?>"/>
 ```
 
