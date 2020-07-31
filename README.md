@@ -29,16 +29,16 @@ class Example
 public function create_example_posttype()
 {
 	$labels = array(
-		'name' 				=> __( 'Examples' ),
-		'singular_name' 		=> __( 'Example' ),
-		'add_new' 			=> __( 'Add New Example' ),
-		'add_new_item' 			=> __( 'Add New Example' ),
-		'edit_item' 			=> __( 'Edit Example' ),
-		'new_item' 			=> __( 'Add New Example' ),
-		'view_item' 			=> __( 'View Example' ),
-		'search_items'    		=> __( 'Search Example' ),
-		'not_found'          		=> __( 'No examples found' ),
-		'not_found_in_trash' 		=> __( 'No examples found in trash' )
+		'name'					=> __( 'Examples' ),
+		'singular_name'			=> __( 'Example' ),
+		'add_new' 				=> __( 'Add New Example' ),
+		'add_new_item'			=> __( 'Add New Example' ),
+		'edit_item'				=> __( 'Edit Example' ),
+		'new_item'				=> __( 'Add New Example' ),
+		'view_item'				=> __( 'View Example' ),
+		'search_items'			=> __( 'Search Example' ),
+		'not_found'				=> __( 'No examples found' ),
+		'not_found_in_trash'	=> __( 'No examples found in trash' )
 
 	);
 	
@@ -48,10 +48,10 @@ public function create_example_posttype()
 	
 	$args = array(
 		'labels' 		=> $labels,
-		'public'    		=> true,
-		'has_archive' 		=> true,
+		'public'		=> true,
+		'has_archive'	=> true,
 		'rewrite' 		=> array('slug' => 'example'),
-		'show_in_rest' 		=> true,
+		'show_in_rest'	=> true,
 		'supports' 		=> $supports,
 		
 		// below if you want to have a meta box
