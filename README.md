@@ -173,7 +173,111 @@ In `plugin-name/includes/class-plugin-name.php`
 		...
 	}
 
-##  Misc.
+## Web Service for AJAX
+In your service class (i.e., ExampleService)
+
+```php
+class ExampleService
+{
+	public function foo_action()
+	{
+		Request::validate_post_request();
+
+		Request::validate_nonce();
+
+		$response = ['success' => true, 'message' => 'foo bar', 'data' => ['fizz' => 'buzz']];
+
+		wp_send_json($response, 200);
+	}
+}
+```
+
+In your `class-plugin-name.php`
+
+```php
+class PluginName
+{
+	// don't forget to load Example Service in load_dependecies()
+
+	private function define_admin_hooks()
+	{
+		$example_service = new ExampleService();
+
+		// /wp-admin/admin-ajax.php?action=foo_action
+		$this->loader->add_action( 'wp_ajax_foo_action', $example_service, 'foo_action');
+	}
+}
+```
+
+## Nonce.
+The way I think of Nonce is like CSRF token. In the `Utils` folder, you can see there is `Request.php` class file. You can call `Request::get_nonce()` to get the nonce token. Always pass your nonce token to key parameter nonce. See the examples below
+
+### Jquery
+```javascript
+	$(function() {
+		$("#some_id").on('click', function() {
+			const nonce = $("#some_nonce").val();
+			const data = { nonce: nonce, key: value }
+			const url = ``;
+			$.post(url, data, function() {
+				// do something
+				// i hate JQuery
+			}, 'json');
+		});
+	})
+```
+
+### Vue
+```javascript
+var app = new Vue({
+	data: {
+		form: {
+			action: 'some_action', // must be available
+			nonce: '',
+			name: 'foo',
+			bar: 'baz',
+		}
+	},
+	methods: {
+		async loadData() {
+			const response = await axios.get('');
+			const { data } = response;
+			const { something, nonce } = data; // getting the nonce from your web service
+			this.form.nonce = nonce // assuming you have data form 
+		},
+
+		// for you to get the FormData object, since axios works very weird with
+		// api created by wordpress when sending form data.
+		// If you use axios to send AJAX request, to POST form data to wordpress API
+		// Wordpress will return 0 for some weird reason. This is the work around. 
+		// Don't waste your time ever again
+		getFormData() {
+			let form_data = new FormData();
+
+			for ( let key in this.form ) {
+				form_data.append(key, this.form[key]);
+			}
+
+			return form_data;
+		},
+
+		async postData() {
+			// getting the base url of the current website
+			const base_url = window.location.origin;
+
+			// always send to below link for WP Admin AJAX request
+			const link = `${base_url}/wp-admin/admin-ajax.php`;
+
+			const response = await axios.post(link, this.getFormData());
+			const { data } = response;
+
+			// do something here
+		}
+	}
+})
+```
+
+## Misc.
 
 ### Adding Shortcodes
 In `plugin-name/includes/class-plugin-name-loader.php`
